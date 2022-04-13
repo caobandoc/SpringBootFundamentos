@@ -55,7 +55,7 @@ public class FundamentosApplication implements CommandLineRunner {
 
 	private void saveUserInDataBase(){
 		User user1 = new User("Carlos", "carlos@gmail.com", LocalDate.of(1999, 6, 6));
-		User user2 = new User("Andres", "andres@gmail.com", LocalDate.of(1999, 7, 7));
+		User user2 = new User("Carlos", "andres@gmail.com", LocalDate.of(1999, 7, 7));
 		User user3 = new User("Obando", "obando@gmail.com", LocalDate.of(1999, 8, 8));
 		User user4 = new User("Casiano", "casiano@gmail.com", LocalDate.of(1999, 9, 9));
 		User user5 = new User("Elvira", "elvira@gmail.com", LocalDate.of(1999, 10, 10));
@@ -77,6 +77,12 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		userRepository.findAndSort("C", Sort.by("id").descending())
 				.forEach(LOGGER::info);
+
+		userRepository.findByName("Carlos")
+				.forEach(user -> LOGGER.info("El usuario con query method: " + user));
+
+		LOGGER.info("El usuario con query method findByEmailAndName: " + userRepository.findByEmailAndName("andres@gmail.com","Carlos")
+				.orElseThrow(()-> new RuntimeException("Usuario no encontrado")));
 	}
 
 	private void ejemplosAnteriores(){
