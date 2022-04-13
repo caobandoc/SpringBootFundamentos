@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -93,7 +92,7 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		userRepository.findBybirthdateBetween(LocalDate.of(1999, 1, 1), LocalDate.of(1999, 12, 31))
 				.forEach(user -> LOGGER.info("Usuario con query method findByBirthDateBetween: " + user));
-*/
+
 		userRepository.findByNameLikeOrderByIdDesc("%a%")
 				.forEach(user -> LOGGER.info("Usuario con query method findByNameLikeOrderByidDesc: " + user));
 
@@ -102,6 +101,9 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		userRepository.findByNameOrBirthdateBetweenOrderByIdDesc("Luque", LocalDate.of(1999, 1, 1), LocalDate.of(1999, 12, 31))
 				.forEach(user -> LOGGER.info("Usuario con query method findByNameOrBirthDateBetweenOrderByIdAsc: " + user));
+	*/
+		LOGGER.info(userRepository.getAllByBirthDateAndEmail(LocalDate.of(1999, 11, 11), "lavado@gmail.com")
+				.orElseThrow(() -> new RuntimeException("No se encontro el usuario")));
 	}
 
 	private void ejemplosAnteriores(){
