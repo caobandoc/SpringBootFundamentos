@@ -61,9 +61,9 @@ public class FundamentosApplication implements CommandLineRunner {
 		User user5 = new User("Elvira", "elvira@gmail.com", LocalDate.of(1999, 10, 10));
 		User user6 = new User("Lavado", "lavado@gmail.com", LocalDate.of(1999, 11, 11));
 		User user7 = new User("Daniel", "daniel@gmail.com", LocalDate.of(1999, 12, 12));
-		User user8 = new User("Steven", "steven@gmail.com", LocalDate.of(1999, 1, 13));
-		User user9 = new User("Garzon", "garzon@gmail.com", LocalDate.of(1999, 2, 14));
-		User user10 = new User("Luque", "luque@gmail.com", LocalDate.of(1999, 3, 15));
+		User user8 = new User("Steven", "steven@gmail.com", LocalDate.of(2000, 1, 13));
+		User user9 = new User("Garzon", "garzon@gmail.com", LocalDate.of(2000, 2, 14));
+		User user10 = new User("Luque", "luque@gmail.com", LocalDate.of(2000, 3, 15));
 
 		List<User> list = Arrays.asList(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10);
 		list.forEach(userRepository::save);
@@ -72,17 +72,36 @@ public class FundamentosApplication implements CommandLineRunner {
 	}
 
 	private void getInformationJpqlFromUser(){
-		LOGGER.info("El usuario con el metodo findByUserEmail: " + userRepository.findByUserEmail("elvira@gmail.com")
+		/*
+		LOGGER.info("Usuario con el metodo findByUserEmail: " + userRepository.findByUserEmail("elvira@gmail.com")
 				.orElseThrow(()-> new RuntimeException("No existe el usuario")));
 
 		userRepository.findAndSort("C", Sort.by("id").descending())
 				.forEach(LOGGER::info);
 
 		userRepository.findByName("Carlos")
-				.forEach(user -> LOGGER.info("El usuario con query method: " + user));
+				.forEach(user -> LOGGER.info("Usuario con query method: " + user));
 
-		LOGGER.info("El usuario con query method findByEmailAndName: " + userRepository.findByEmailAndName("andres@gmail.com","Carlos")
+		LOGGER.info("Usuario con query method findByEmailAndName: " + userRepository.findByEmailAndName("andres@gmail.com","Carlos")
 				.orElseThrow(()-> new RuntimeException("Usuario no encontrado")));
+
+		userRepository.findByNameLike("%a%")
+				.forEach(user -> LOGGER.info("Usuario con query method findByNameLike: " + user));
+
+		userRepository.findByNameOrEmail(null, "daniel@gmail.com")
+				.forEach(user -> LOGGER.info("Usuario con query method findByNameOrEmail: " + user));
+
+		userRepository.findBybirthdateBetween(LocalDate.of(1999, 1, 1), LocalDate.of(1999, 12, 31))
+				.forEach(user -> LOGGER.info("Usuario con query method findByBirthDateBetween: " + user));
+*/
+		userRepository.findByNameLikeOrderByIdDesc("%a%")
+				.forEach(user -> LOGGER.info("Usuario con query method findByNameLikeOrderByidDesc: " + user));
+
+		userRepository.findByNameContainingOrderByIdDesc("a")
+				.forEach(user -> LOGGER.info("Usuario con query method findByNameContainingOrderByIdDesc: " + user));
+
+		userRepository.findByNameOrBirthdateBetweenOrderByIdDesc("Luque", LocalDate.of(1999, 1, 1), LocalDate.of(1999, 12, 31))
+				.forEach(user -> LOGGER.info("Usuario con query method findByNameOrBirthDateBetweenOrderByIdAsc: " + user));
 	}
 
 	private void ejemplosAnteriores(){
